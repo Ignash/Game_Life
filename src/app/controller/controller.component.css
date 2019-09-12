@@ -1,0 +1,45 @@
+input[type="range"]{
+    -webkit-appearance: none;
+    
+    outline : none;
+    width: 150px;
+    position: relative;
+    color: #fff;
+}
+input[type="range"]::before{
+    content: ''; 
+    position: absolute;
+    border: 21px solid transparent; 
+    border-bottom: 0px solid #3d85f3; 
+    
+}
+
+input[name="range"]::before{
+    border-right: 150px solid #3d85f3;
+    right: 0;
+}
+
+input[name="delay"]::before{
+    border-left: 150px solid #3d85f3;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width:10px;
+    height:22px;
+    background:rgb(226, 226, 226);
+    border: 1px solid rgb(66, 66, 66);
+    border-radius:3px;
+    cursor:pointer;
+    position: relative;
+    
+    /* box-shadow: 0px 1px 1px #696868, 0px 0px 1px #727171; */
+    transition:.1s;
+}
+/* input[type="range"]::-webkit-slider-thumb:hover, .range::-webkit-slider-thumb:active{
+    border: 1px solid rgb(201, 199, 199);
+} */
+
+.opacity{
+    opacity: 0.5;
+}

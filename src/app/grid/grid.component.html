@@ -1,5 +1,7 @@
-<div class="main" [ngStyle]="styleMain">
-    <div [ngStyle]="styleDiv" *ngFor="let i of matrixValue; let index_i = index" >
-        <div *ngFor="let j of matrixValue[index_i]; let index_j = index"  class="cell"  [ngClass]="{'alive': matrixValue[index_i][index_j] === true}"  (click)="reviveCell(index_i, index_j)"></div>
+<div class="block_grid">
+    <div class="main" [ngStyle]="styleMain">
+        <div [ngStyle]="styleDiv" *ngFor="let i of matrixValue; let index_i = index" >
+            <div *ngFor="let j of matrixValue[index_i]; let index_j = index"  class="cell"  [ngClass]="{'alive': matrixValue[index_i][index_j] === true}"  (click)="reviveCell(index_i, index_j)"></div>
+        </div>
     </div>
 </div>

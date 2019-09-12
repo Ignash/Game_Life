@@ -1,3 +1,4 @@
-<button>Start</button>
-<button>Stop</button>
-<input type="range" #rangeInput name="points" min="10" max="30" step="5" [(ngModel)]="range" (ngModelChange)="changeRange($event)">
+<button (click)="startLife()">Start</button>
+<button (click)="endLife()">Stop</button>
+<input [ngClass]="{'opacity': start}" type="range" #rangeInput name="range" min="12" max="48" step="6" [(ngModel)]="range" (ngModelChange)="changeRange($event)">
+<input type="range" #delayInput name="delay" min="100" max="1000" step="100" [(ngModel)]="delay" (ngModelChange)="changeDelay($event)" >

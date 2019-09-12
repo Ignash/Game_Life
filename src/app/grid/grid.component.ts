@@ -8,37 +8,84 @@ import { ModulesService } from '../modules.service';
 })
 export class GridComponent implements OnInit {
   size: number;
-  matrixValue: object[];
+  matrixValue: Array<boolean[]> = [[]];
   height: string;
   styleMain: Object;
   styleDiv : Object;
-
-  
+  matrixDie: boolean;
 
   constructor(private moduleService: ModulesService) { 
-    moduleService.rang$.subscribe(range=>{
+    moduleService.rang$.subscribe((range)=>{
       this.size = range; 
       this.setHeight(this.size);
       this.setMatrix(range);
       this.setStyleDiv(range);
       this.setStyleMain(range, this.height);
+      this.moduleService.setMatrix(this.matrixValue);
+    });
+
+    moduleService.newMatrix$.subscribe((matrix)=>{
+      this.matrixValue = matrix;
+      this.moduleService.setMatrix(matrix);
     })
   }
 
   ngOnInit() {
-    this.setMatrix(this.size);
     this.setHeight(this.size);
     this.setStyleMain(this.size, this.height);
     this.setStyleDiv(this.size);
+    this.moduleService.setMatrix(this.matrixValue);
   } 
 
   reviveCell(a, b){
     this.matrixValue[a][b] = !this.matrixValue[a][b];
-    this.moduleService.serviceMatrix = this.matrixValue;
-  }
+    this.moduleService.setMatrix(this.matrixValue);
+  };
 
   setMatrix(size){
-    this.matrixValue = Array(size).fill(0).map(item =>Array(size).fill(false));
+    if(this.matrixValue.length === 1){
+      this.matrixValue = Array(size).fill(0).map(item =>Array(size).fill(false));
+    } else {
+      let delta = this.matrixValue.length - size;
+      let a = Math.abs(Math.floor(delta/2));
+      let b = Math.abs(Math.ceil(delta/2));
+
+      if(delta > 0){
+        while (a-- > 0){
+          this.matrixValue.shift();
+          this.matrixValue.map((elem)=>{
+            elem.shift();
+            return elem
+          })
+        };
+        while (b-- > 0){
+          this.matrixValue.pop();
+          this.matrixValue.map((elem)=>{
+            elem.pop()
+            return elem
+          })
+        };
+      } else {
+        while (a-- > 0){
+          this.matrixValue.unshift(Array(size).fill(false));
+          this.matrixValue.map((elem)=>{
+            if (elem.length !== (size)){
+              elem.unshift(false)
+            }
+            return elem
+          })
+        };
+        while (b-- > 0){
+          this.matrixValue.push(Array(size).fill(false));
+          this.matrixValue.map((elem)=>{
+            if (elem.length !== (size)){
+              elem.push(false)
+            }
+            return elem
+          })
+        };
+      }
+    }
   };
 
   setStyleMain(size, height){
@@ -58,5 +105,6 @@ export class GridComponent implements OnInit {
   setHeight(size){
     this.height = (size*10 + (size - 1)*2) + 'px';
   }
+
   
 }
